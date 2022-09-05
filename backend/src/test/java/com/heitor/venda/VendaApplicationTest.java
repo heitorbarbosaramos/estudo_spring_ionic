@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class VendaApplicationTest {
 
     @Test
-    void Main(){
+    void main(){
         VendaApplication.main(new String[]{});
     }
 
