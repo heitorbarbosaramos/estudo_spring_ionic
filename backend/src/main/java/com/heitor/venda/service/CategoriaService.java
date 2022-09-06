@@ -2,11 +2,8 @@ package com.heitor.venda.service;
 
 import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.repository.CategoriaRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @Service
 public class CategoriaService {
