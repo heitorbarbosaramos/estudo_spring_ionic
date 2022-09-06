@@ -1,0 +1,31 @@
+package com.heitor.venda.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Produto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String nome;
+    private Double preco;
+
+    @ManyToMany
+    @JoinTable(name = "PRODUTO_CATEGORIA",
+        joinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
+}
