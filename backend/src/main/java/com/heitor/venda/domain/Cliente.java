@@ -35,4 +35,7 @@ public class Cliente {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "CLIENTE_TELEFONE")
     private Set<String> telefones = new HashSet<>();
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos = new ArrayList<>();
 }
