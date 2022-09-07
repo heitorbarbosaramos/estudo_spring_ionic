@@ -27,7 +27,7 @@ class CategoriaServiceTest {
 
         Categoria categoria = service.findById(1);
         List<Produto> produtos = categoria.getProdutos();
-        
+
         Assertions.assertEquals(Categoria.class, categoria.getClass());
         Assertions.assertNotNull(produtos);
     }
