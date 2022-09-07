@@ -1,5 +1,6 @@
 package com.heitor.venda.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,17 @@ import javax.persistence.Id;
 @Entity
 public class ItemPedido {
 
+    @JsonIgnore
     @EmbeddedId
+    @Getter
     private ItemPedidoPk id = new ItemPedidoPk();
     private Double desconto;
     private Integer quantidade;
     private Double preco;
+
+    public void setId(Produto produto, Pedido pedido) {
+        this.id.setPedido(pedido);
+        this.id.setProduto(produto);
+        this.preco = this.id.getProduto().getPreco() * quantidade;
+    }
 }

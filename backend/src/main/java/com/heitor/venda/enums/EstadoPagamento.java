@@ -1,2 +1,8 @@
-package com.heitor.venda.enums;public enum EstadoPagamento {
+package com.heitor.venda.enums;
+
+public enum EstadoPagamento {
+
+    QUITADO,
+    CANCELADO,
+    PENDENTE;
 }

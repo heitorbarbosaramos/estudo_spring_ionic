@@ -1,5 +1,6 @@
 package com.heitor.venda.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Produto {
         inverseJoinColumns = @JoinColumn(name = "categoria_id", referencedColumnName = "id"))
     private List<Categoria> categorias = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy="id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 }
