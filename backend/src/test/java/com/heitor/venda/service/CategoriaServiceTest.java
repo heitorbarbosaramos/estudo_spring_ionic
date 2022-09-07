@@ -36,6 +36,8 @@ class CategoriaServiceTest {
     @Test
     void testFindByIdNotFound(){
 
+        Mockito.when(repo.findById(Mockito.anyInt())).thenThrow(new ObjectNotFoundExceptions(Mockito.anyString()));
+
        try {
            service.findById(1);
        }catch (Exception e){
