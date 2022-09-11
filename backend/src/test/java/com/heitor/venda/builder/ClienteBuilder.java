@@ -3,10 +3,10 @@ package com.heitor.venda.builder;
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.dto.ClienteDTO;
 import com.heitor.venda.enums.TipoCliente;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class ClienteBuilder {
 
@@ -42,5 +42,20 @@ public class ClienteBuilder {
 
     public static Optional<Cliente> criarOptional(){
         return Optional.of(criarObjeto());
+    }
+
+    public static List<Cliente> criarLista(){
+        List<Cliente> list = new ArrayList<>();
+        list.add(criarObjeto());
+        return list;
+    }
+
+    public static Page<Cliente> criarPage(){
+        return new PageImpl<>(List.of(criarObjeto()));
+    }
+    public static List<ClienteDTO> criarListaDtos(){
+        List<ClienteDTO> dtos = new ArrayList<>();
+        dtos.add(criarDto());
+        return dtos;
     }
 }

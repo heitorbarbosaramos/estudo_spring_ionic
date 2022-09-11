@@ -11,6 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,6 +68,42 @@ class ClienteServiceTest {
 
         service.delete(ClienteBuilder.criarDto().getId());
 
-        Mockito.verify(repo, Mockito.times(1) );
+        Mockito.verify(repo, Mockito.times(1)).delete(Mockito.any());
+    }
+
+    @Test
+    void findAllDto(){
+        Mockito.when(mapper.toDto(Mockito.any())).thenReturn(ClienteBuilder.criarDto());
+        Mockito.when(repo.findAll()).thenReturn(ClienteBuilder.criarLista());
+
+        List<ClienteDTO> list = service.findAll();
+
+        Assertions.assertEquals(ArrayList.class, list.getClass());
+        Assertions.assertEquals(ClienteDTO.class, list.get(0).getClass());
+    }
+
+    @Test
+    void pageCliente(){
+        PageRequest pageRequest = PageRequest.of(0, 1, Sort.Direction.valueOf("ASC"), "NOME");
+
+        Mockito.when(repo.findAll(pageRequest)).thenReturn(ClienteBuilder.criarPage());
+
+        Page<Cliente> pageCliente = service.pageCliente(0, 1, "ASC", "NOME");
+
+        Assertions.assertNotNull(pageCliente);
+        Assertions.assertEquals(Cliente.class, pageCliente.getContent().get(0).getClass());
+    }
+
+    @Test
+    void pageClienteDto(){
+        PageRequest pageRequest = PageRequest.of(0, 1, Sort.Direction.valueOf("ASC"), "NOME");
+
+        Mockito.when(repo.findAll(pageRequest)).thenReturn(ClienteBuilder.criarPage());
+        Mockito.when(mapper.toDto(Mockito.any())).thenReturn(ClienteBuilder.criarDto());
+
+        Page<ClienteDTO> pageCliente = service.pageClienteDto(0, 1, "ASC", "NOME");
+
+        Assertions.assertNotNull(pageCliente);
+        Assertions.assertEquals(ClienteDTO.class, pageCliente.getContent().get(0).getClass());
     }
 }
