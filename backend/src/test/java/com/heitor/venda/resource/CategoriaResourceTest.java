@@ -2,6 +2,7 @@ package com.heitor.venda.resource;
 
 import com.heitor.venda.builder.CategoriaBuilder;
 import com.heitor.venda.domain.Categoria;
+import com.heitor.venda.domain.dto.CategoriaDTO;
 import com.heitor.venda.service.CategoriaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,5 +62,14 @@ class CategoriaResourceTest {
         ResponseEntity<Void> response = resource.delete(1);
 
         Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    void findAllDto(){
+        Mockito.doReturn(CategoriaBuilder.criarListaDto()).when(service).findListDto();
+
+        ResponseEntity<List<CategoriaDTO>> response = resource.findAllDto();
+
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 }

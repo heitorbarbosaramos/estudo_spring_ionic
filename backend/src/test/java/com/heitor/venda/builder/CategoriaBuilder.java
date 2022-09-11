@@ -1,6 +1,7 @@
 package com.heitor.venda.builder;
 
 import com.heitor.venda.domain.Categoria;
+import com.heitor.venda.domain.dto.CategoriaDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,23 @@ public class CategoriaBuilder {
         return categoria;
     }
 
+    public static CategoriaDTO criarDto(){
+        CategoriaDTO dto = new CategoriaDTO();
+        dto.setId(criarObjeto().getId());
+        dto.setNome(criarObjeto().getNome());
+        return dto;
+    }
+
     public static List<Categoria> criarLista(){
         List<Categoria> categorias = new ArrayList<>();
         categorias.add(criarObjeto());
         return categorias;
+    }
+
+    public static List<CategoriaDTO> criarListaDto(){
+        List<CategoriaDTO> list = new ArrayList<>();
+        list.add(criarDto());
+        return list;
     }
 
     public static Optional<Categoria> criarOptional(){

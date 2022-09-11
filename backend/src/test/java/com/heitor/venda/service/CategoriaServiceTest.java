@@ -3,8 +3,10 @@ package com.heitor.venda.service;
 import com.heitor.venda.builder.CategoriaBuilder;
 import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.domain.Produto;
+import com.heitor.venda.domain.dto.CategoriaDTO;
 import com.heitor.venda.exceptions.ObjectNotFoundExceptions;
 import com.heitor.venda.repository.CategoriaRepository;
+import com.heitor.venda.service.mapper.CategoriaMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -21,6 +24,8 @@ class CategoriaServiceTest {
     private CategoriaService service;
     @Mock
     private CategoriaRepository repo;
+    @Mock
+    private CategoriaMapper mapper;
 
     @Test
     void testFindById(){
@@ -82,5 +87,17 @@ class CategoriaServiceTest {
         service.delete(CategoriaBuilder.criarObjeto().getId());
 
         Mockito.verify(repo, Mockito.times(1)).delete(Mockito.any());
+    }
+
+    @Test
+    void findListDto(){
+        Mockito.doReturn(CategoriaBuilder.criarLista()).when(repo).findAll();
+        Mockito.when(mapper.toDto(Mockito.any())).thenReturn(CategoriaBuilder.criarDto());
+
+        List<CategoriaDTO> list = service.findListDto();
+
+        Assertions.assertNotNull(list);
+        Assertions.assertEquals(ArrayList.class, list.getClass());
+        Assertions.assertEquals(CategoriaDTO.class, list.get(0).getClass());
     }
 }
