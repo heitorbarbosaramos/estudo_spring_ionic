@@ -59,4 +59,19 @@ class CategoriaServiceTest {
 
     }
 
+    @Test
+    void testUpdate(){
+        Mockito.doReturn(CategoriaBuilder.criarOptional()).when(repo).findById(Mockito.anyInt());
+
+        Categoria categoria = CategoriaBuilder.criarObjeto();
+        categoria.setNome("Update Categoria");
+
+        Mockito.doReturn(categoria).when(repo).save(Mockito.any());
+
+        categoria = service.update(categoria);
+
+        Assertions.assertEquals(Categoria.class, categoria.getClass());
+        Assertions.assertEquals("Update Categoria", categoria.getNome());
+    }
+
 }

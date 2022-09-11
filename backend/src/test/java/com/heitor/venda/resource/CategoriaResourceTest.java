@@ -1,6 +1,7 @@
 package com.heitor.venda.resource;
 
 import com.heitor.venda.builder.CategoriaBuilder;
+import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.service.CategoriaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,16 @@ class CategoriaResourceTest {
         ResponseEntity<Void> response = resource.save(CategoriaBuilder.criarObjeto());
 
         Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+
+    }
+
+    @Test
+    void update(){
+        Mockito.doReturn(Mockito.mock(Categoria.class)).when(service).update(Mockito.any());
+
+        ResponseEntity<Void> response = resource.update(1, CategoriaBuilder.criarObjeto());
+
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
     }
 }

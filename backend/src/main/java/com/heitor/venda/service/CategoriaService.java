@@ -20,8 +20,12 @@ public class CategoriaService {
         return repo.save(categoria);
     }
 
-
     public Categoria findById(Integer id){
         return repo.findById(id).orElseThrow(()-> new ObjectNotFoundExceptions("Categoria não encontrada, id: " + id));
+    }
+
+    public Categoria update(Categoria categoria){
+        findById(categoria.getId());
+        return save(categoria);
     }
 }

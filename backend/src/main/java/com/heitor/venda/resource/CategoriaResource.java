@@ -29,4 +29,11 @@ public class CategoriaResource {
     public ResponseEntity<Categoria> findById(@PathVariable(name = "id") Integer id){
         return ResponseEntity.ok(service.findById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Integer id, @RequestBody Categoria categoria){
+        categoria.setId(id);
+        service.update(categoria);
+        return ResponseEntity.noContent().build();
+    }
 }
