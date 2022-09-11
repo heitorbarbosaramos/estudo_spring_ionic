@@ -13,6 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,5 +103,28 @@ class CategoriaServiceTest {
         Assertions.assertNotNull(list);
         Assertions.assertEquals(ArrayList.class, list.getClass());
         Assertions.assertEquals(CategoriaDTO.class, list.get(0).getClass());
+    }
+
+    @Test
+    void pageRequest(){
+        PageRequest pageRequest = PageRequest.of(0, 1, Sort.Direction.valueOf("ASC"), "NOME");
+        Mockito.doReturn(new PageImpl<>(List.of(CategoriaBuilder.criarObjeto()))).when(repo).findAll(pageRequest);
+
+        Page<Categoria> pageCategoria = service.pageCategoria(0, 1, "ASC", "NOME");
+
+        Assertions.assertNotNull(pageCategoria);
+        Assertions.assertEquals(Categoria.class,  pageCategoria.getContent().get(0).getClass());
+    }
+
+    @Test
+    void pageCategoriaDto(){
+        PageRequest pageRequest = PageRequest.of(0, 1, Sort.Direction.valueOf("ASC"), "NOME");
+        Mockito.doReturn(new PageImpl<>(List.of(CategoriaBuilder.criarObjeto()))).when(repo).findAll(pageRequest);
+        Mockito.when(mapper.toDto(Mockito.any())).thenReturn(CategoriaBuilder.criarDto());
+
+        Page<CategoriaDTO> categoriaDTOS = service.pageCategoriaDto(0, 1, "ASC", "NOME");
+
+        Assertions.assertNotNull(categoriaDTOS);
+        Assertions.assertEquals(CategoriaDTO.class,  categoriaDTOS.getContent().get(0).getClass());
     }
 }

@@ -2,6 +2,8 @@ package com.heitor.venda.builder;
 
 import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.domain.dto.CategoriaDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,11 @@ public class CategoriaBuilder {
 
     public static Optional<Categoria> criarOptional(){
        return Optional.of(criarObjeto());
+    }
+
+    public static Page<CategoriaDTO> criarPageDto(){
+        Page<CategoriaDTO> page = new PageImpl<>(List.of(criarDto()));
+        return page;
     }
 
 }

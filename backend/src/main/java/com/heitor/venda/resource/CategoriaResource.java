@@ -4,6 +4,7 @@ import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.domain.dto.CategoriaDTO;
 import com.heitor.venda.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,6 +32,15 @@ public class CategoriaResource {
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAllDto(){
         return ResponseEntity.ok(service.findListDto());
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CategoriaDTO>> findAllPageDto(
+            @RequestParam(value = "page",       defaultValue = "0") Integer page,
+            @RequestParam(value = "size",       defaultValue = "24") Integer size,
+            @RequestParam(value = "direction",  defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy",    defaultValue = "NOME") String orderBy){
+        return ResponseEntity.ok(service.pageCategoriaDto(page, size, direction, orderBy));
     }
 
     @GetMapping("/{id}")

@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -71,5 +72,14 @@ class CategoriaResourceTest {
         ResponseEntity<List<CategoriaDTO>> response = resource.findAllDto();
 
         Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void findAllPageDto(){
+        Mockito.when(service.pageCategoriaDto(Mockito.anyInt(), Mockito.anyInt(), Mockito.anyString(), Mockito.anyString())).thenReturn(CategoriaBuilder.criarPageDto());
+
+        ResponseEntity<Page<CategoriaDTO>> response = resource.findAllPageDto(0, 24, "ASC", "NOME");
+
+        Assertions.assertNotNull(response);
     }
 }
