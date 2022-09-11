@@ -41,7 +41,7 @@ class CategoriaResourceTest {
 
         Mockito.doReturn(CategoriaBuilder.criarObjeto()).when(service).save(Mockito.any());
 
-        ResponseEntity<Void> response = resource.save(CategoriaBuilder.criarObjeto());
+        ResponseEntity<Void> response = resource.save(CategoriaBuilder.criarDto());
 
         Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
 
@@ -52,6 +52,17 @@ class CategoriaResourceTest {
         Mockito.doReturn(Mockito.mock(CategoriaDTO.class)).when(service).update(Mockito.any());
 
         ResponseEntity<Void> response = resource.update(1, CategoriaBuilder.criarDto());
+
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    void updateError(){
+        Mockito.doReturn(Mockito.mock(CategoriaDTO.class)).when(service).update(Mockito.any());
+
+        CategoriaDTO dto = CategoriaBuilder.criarDto();
+        dto.setNome(null);
+        ResponseEntity<Void> response = resource.update(1, dto);
 
         Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }

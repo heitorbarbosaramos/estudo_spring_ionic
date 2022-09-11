@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 public class CategoriaDTO {
 
     private Integer id;
-    @NotEmpty
+    @NotEmpty(message = "Campo não pode ser vazio")
     @Length(min = 5, max = 50, message = "Campo nome deve conter de 5 a 50 caracteres")
     private String nome;
 }

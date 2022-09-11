@@ -25,7 +25,7 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(Categoria categoria){
+    public ResponseEntity<Void> save(@RequestBody @Valid CategoriaDTO categoria){
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(service.save(categoria).getId()).toUri();
         return ResponseEntity.created(uri).build();
     }

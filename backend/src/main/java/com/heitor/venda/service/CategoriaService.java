@@ -27,8 +27,8 @@ public class CategoriaService {
         this.mapper = mapper;
     }
 
-    public Categoria save(Categoria categoria){
-        return repo.save(categoria);
+    public Categoria save(CategoriaDTO categoria){
+        return repo.save(mapper.toEntity(categoria));
     }
 
     public Categoria findById(Integer id){
@@ -52,7 +52,7 @@ public class CategoriaService {
 
     public CategoriaDTO update(CategoriaDTO categoriaDto){
         findById(categoriaDto.getId());
-        Categoria categoria = save(mapper.toEntity(categoriaDto));
+        Categoria categoria = save(categoriaDto);
         return mapper.toDto(categoria);
     }
 
