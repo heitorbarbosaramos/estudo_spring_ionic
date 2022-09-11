@@ -1,6 +1,7 @@
 package com.heitor.venda.builder;
 
 import com.heitor.venda.domain.Cliente;
+import com.heitor.venda.domain.dto.ClienteDTO;
 import com.heitor.venda.enums.TipoCliente;
 
 import java.util.HashSet;
@@ -19,6 +20,17 @@ public class ClienteBuilder {
         cliente.setEnderecoList(EnderecoBuilder.lista());
         cliente.setTelefones(telefones());
         return cliente;
+    }
+
+    public static ClienteDTO criarDto(){
+        ClienteDTO dto = new ClienteDTO();
+        dto.setId(criarObjeto().getId());
+        dto.setNome(criarObjeto().getNome());
+        dto.setEmail(criarObjeto().getEmail());
+        dto.setTipo(criarObjeto().getTipo());
+        dto.setCpfOuCnpj(criarObjeto().getCpfOuCnpj());
+
+        return dto;
     }
 
     public static Set<String> telefones(){
