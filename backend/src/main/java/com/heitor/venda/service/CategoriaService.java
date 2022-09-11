@@ -16,6 +16,11 @@ public class CategoriaService {
         this.repo = repo;
     }
 
+    public Categoria save(Categoria categoria){
+        return repo.save(categoria);
+    }
+
+
     public Categoria findById(Integer id){
         return repo.findById(id).orElseThrow(()-> new ObjectNotFoundExceptions("Categoria não encontrada, id: " + id));
     }

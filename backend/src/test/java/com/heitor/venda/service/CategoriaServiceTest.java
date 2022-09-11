@@ -45,4 +45,18 @@ class CategoriaServiceTest {
        }
     }
 
+    @Test
+    void testSave(){
+        Mockito.when(repo.save(Mockito.any())).thenReturn(CategoriaBuilder.criarObjeto());
+
+        Categoria categoria = CategoriaBuilder.criarObjeto();
+        categoria.setId(null);
+
+        categoria = service.save(categoria);
+
+        Assertions.assertNotNull(categoria);
+        Assertions.assertEquals(Categoria.class, categoria.getClass());
+
+    }
+
 }

@@ -30,4 +30,15 @@ class CategoriaResourceTest {
 
         Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
+
+    @Test
+    void save(){
+
+        Mockito.doReturn(CategoriaBuilder.criarObjeto()).when(service).save(Mockito.any());
+
+        ResponseEntity<Void> response = resource.save(CategoriaBuilder.criarObjeto());
+
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+
+    }
 }
