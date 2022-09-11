@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class CategoriaResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Integer id, @RequestBody Categoria categoria){
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Integer id, @RequestBody @Valid CategoriaDTO categoria){
         categoria.setId(id);
         service.update(categoria);
         return ResponseEntity.noContent().build();

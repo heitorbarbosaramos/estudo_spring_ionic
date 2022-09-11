@@ -72,15 +72,22 @@ class CategoriaServiceTest {
     void testUpdate(){
         Mockito.doReturn(CategoriaBuilder.criarOptional()).when(repo).findById(Mockito.anyInt());
 
+        CategoriaDTO categoriaDTO = CategoriaBuilder.criarDto();
+        categoriaDTO.setNome("Update Categoria");
+
         Categoria categoria = CategoriaBuilder.criarObjeto();
-        categoria.setNome("Update Categoria");
+        categoria.setNome(categoriaDTO.getNome());
+
+        Mockito.when(mapper.toEntity(categoriaDTO)).thenReturn(categoria);
+        Mockito.when(mapper.toDto(categoria)).thenReturn(categoriaDTO);
 
         Mockito.doReturn(categoria).when(repo).save(Mockito.any());
 
-        categoria = service.update(categoria);
 
-        Assertions.assertEquals(Categoria.class, categoria.getClass());
-        Assertions.assertEquals("Update Categoria", categoria.getNome());
+        categoriaDTO = service.update(categoriaDTO);
+
+        Assertions.assertEquals(CategoriaDTO.class, categoriaDTO.getClass());
+        Assertions.assertEquals("Update Categoria", categoriaDTO.getNome());
     }
 
     @Test

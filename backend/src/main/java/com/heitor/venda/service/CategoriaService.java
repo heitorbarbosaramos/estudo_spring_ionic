@@ -50,9 +50,10 @@ public class CategoriaService {
         return dtos;
     }
 
-    public Categoria update(Categoria categoria){
-        findById(categoria.getId());
-        return save(categoria);
+    public CategoriaDTO update(CategoriaDTO categoriaDto){
+        findById(categoriaDto.getId());
+        Categoria categoria = save(mapper.toEntity(categoriaDto));
+        return mapper.toDto(categoria);
     }
 
     public void delete(Integer id){

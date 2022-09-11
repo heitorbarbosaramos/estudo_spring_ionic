@@ -49,9 +49,9 @@ class CategoriaResourceTest {
 
     @Test
     void update(){
-        Mockito.doReturn(Mockito.mock(Categoria.class)).when(service).update(Mockito.any());
+        Mockito.doReturn(Mockito.mock(CategoriaDTO.class)).when(service).update(Mockito.any());
 
-        ResponseEntity<Void> response = resource.update(1, CategoriaBuilder.criarObjeto());
+        ResponseEntity<Void> response = resource.update(1, CategoriaBuilder.criarDto());
 
         Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
