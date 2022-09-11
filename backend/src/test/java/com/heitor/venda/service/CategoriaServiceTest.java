@@ -74,4 +74,13 @@ class CategoriaServiceTest {
         Assertions.assertEquals("Update Categoria", categoria.getNome());
     }
 
+    @Test
+    void delete(){
+        Mockito.doNothing().when(repo).delete(Mockito.any());
+        Mockito.doReturn(CategoriaBuilder.criarOptional()).when(repo).findById(Mockito.anyInt());
+
+        service.delete(CategoriaBuilder.criarObjeto().getId());
+
+        Mockito.verify(repo, Mockito.times(1)).delete(Mockito.any());
+    }
 }

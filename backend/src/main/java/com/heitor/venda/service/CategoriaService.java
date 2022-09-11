@@ -28,4 +28,8 @@ public class CategoriaService {
         findById(categoria.getId());
         return save(categoria);
     }
+
+    public void delete(Integer id){
+        repo.delete(findById(id));
+    }
 }

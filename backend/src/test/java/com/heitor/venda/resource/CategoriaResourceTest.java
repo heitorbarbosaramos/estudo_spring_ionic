@@ -50,6 +50,14 @@ class CategoriaResourceTest {
         ResponseEntity<Void> response = resource.update(1, CategoriaBuilder.criarObjeto());
 
         Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
 
+    @Test
+    void delete(){
+        Mockito.doNothing().when(service).delete(Mockito.anyInt());
+
+        ResponseEntity<Void> response = resource.delete(1);
+
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 }

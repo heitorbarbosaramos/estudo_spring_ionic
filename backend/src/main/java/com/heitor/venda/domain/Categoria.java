@@ -23,6 +23,6 @@ public class Categoria implements Serializable {
     private String nome;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "categorias")
+    @ManyToMany(mappedBy = "categorias", cascade = CascadeType.ALL)
     private List<Produto> produtos = new ArrayList<>();
 }
