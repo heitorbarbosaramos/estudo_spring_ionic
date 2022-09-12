@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,8 +25,10 @@ public class ClienteResources {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody @Valid Cliente cliente){
-        return ResponseEntity.ok(service.save(cliente));
+    public ResponseEntity<ClienteDTO> save(@RequestBody @Valid ClienteDTO clienteDto){
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(service.novo(clienteDto).getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping

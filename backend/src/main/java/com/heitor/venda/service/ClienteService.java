@@ -30,6 +30,12 @@ public class ClienteService {
         return repo.save(cliente);
     }
 
+    public ClienteDTO novo(ClienteDTO clienteDTO){
+        Cliente cliente = mapper.toEntity(clienteDTO);
+        return mapper.toDto(save(cliente));
+    }
+
+
     public ClienteDTO update(ClienteDTO clienteDTO){
         Cliente cliente = save(mapper.toEntity(clienteDTO));
         return mapper.toDto(cliente);
