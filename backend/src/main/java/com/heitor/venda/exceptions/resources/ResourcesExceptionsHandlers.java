@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -28,6 +29,24 @@ public class ResourcesExceptionsHandlers {
         MensagemErrorPadrao padrao = new MensagemErrorPadrao();
         padrao.setStatusHttp(status.toString());
         padrao.setMensagem(e.getMessage());
+        padrao.setPath(request.getRequestURI());
+        padrao.setData(LocalDateTime.now());
+
+        LOG.error(e.getMessage());
+        e.getStackTrace();
+
+        return ResponseEntity.status(status).body(padrao);
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<MensagemErrorPadrao> sQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e, HttpServletRequest request){
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        String mensagem = "Chave de valor único foi repetida: " + e.getMessage().substring(e.getMessage().indexOf("(")+1, e.getMessage().indexOf(")") );
+        MensagemErrorPadrao padrao = new MensagemErrorPadrao();
+        padrao.setStatusHttp(status.toString());
+        padrao.setMensagem(mensagem);
         padrao.setPath(request.getRequestURI());
         padrao.setData(LocalDateTime.now());
 
