@@ -1,5 +1,6 @@
 package com.heitor.venda.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.heitor.venda.enums.EstadoPagamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento {
 
     @Id
