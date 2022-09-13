@@ -35,6 +35,10 @@ public class CategoriaService {
         return repo.findById(id).orElseThrow(()-> new ObjectNotFoundExceptions("Categoria não encontrada, id: " + id));
     }
 
+    public List<Categoria> findAllById(List<Integer> ids){
+        return repo.findAllById(ids);
+    }
+
     public List<CategoriaDTO> findListDto(){
         return repo.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
