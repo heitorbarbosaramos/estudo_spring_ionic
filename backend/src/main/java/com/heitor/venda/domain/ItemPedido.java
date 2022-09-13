@@ -30,4 +30,8 @@ public class ItemPedido {
         this.id.setProduto(produto);
         this.preco = this.id.getProduto().getPreco() * quantidade;
     }
+
+    public Double getSubTotal(){
+        return (preco - desconto) * quantidade;
+    }
 }

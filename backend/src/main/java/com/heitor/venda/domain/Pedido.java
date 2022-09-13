@@ -32,4 +32,12 @@ public class Pedido {
 
     @OneToMany(mappedBy="id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
+
+    public Double getValorTotal(){
+        Double total = 0.0;
+        for (ItemPedido x : this.itens){
+            total += x.getSubTotal();
+        }
+        return total;
+    }
 }
