@@ -44,9 +44,10 @@ public class DBinstanciando {
         Categoria cat5 = new Categoria(null, "Brinquedos",         null);
         Categoria cat6 = new Categoria(null, "Automotivos",        null);
         Categoria cat7 = new Categoria(null, "Animais",            null);
-        Categoria cat8 = new Categoria(null, "Calçados",            null);
+        Categoria cat8 = new Categoria(null, "Calçados",           null);
+        Categoria cat9 = new Categoria(null, "Perfumaria",         null);
 
-        catRepo.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8));
+        catRepo.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9));
     }
 
     public void criarProduto(){
