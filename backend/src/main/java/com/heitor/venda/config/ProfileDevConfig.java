@@ -29,6 +29,7 @@ public class ProfileDevConfig {
 
         db.criarCategorias();
         db.criarProduto();
+        db.criarCliente();
 
         return true;
     }
