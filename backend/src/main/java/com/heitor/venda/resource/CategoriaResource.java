@@ -40,7 +40,7 @@ public class CategoriaResource {
             @RequestParam(value = "page",       defaultValue = "0") Integer page,
             @RequestParam(value = "size",       defaultValue = "24") Integer size,
             @RequestParam(value = "direction",  defaultValue = "ASC") String direction,
-            @RequestParam(value = "orderBy",    defaultValue = "NOME") String orderBy){
+            @RequestParam(value = "orderBy",    defaultValue = "nome") String orderBy){
         return ResponseEntity.ok(service.pageCategoriaDto(page, size, direction, orderBy));
     }
 

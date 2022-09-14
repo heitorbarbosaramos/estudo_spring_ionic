@@ -38,6 +38,23 @@ public class ResourcesExceptionsHandlers {
         return ResponseEntity.status(status).body(padrao);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<MensagemErrorPadrao> exception(Exception e, HttpServletRequest request){
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        MensagemErrorPadrao padrao = new MensagemErrorPadrao();
+        padrao.setStatusHttp(status.toString());
+        padrao.setMensagem(e.getMessage());
+        padrao.setPath(request.getRequestURI());
+        padrao.setData(LocalDateTime.now());
+
+        LOG.error(e.getMessage());
+        e.getStackTrace();
+
+        return ResponseEntity.status(status).body(padrao);
+    }
+
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<MensagemErrorPadrao> sQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e, HttpServletRequest request){
 

@@ -51,7 +51,7 @@ public class ClienteResources {
             @RequestParam(name = "page",        defaultValue = "0")     Integer page,
             @RequestParam(name = "size",        defaultValue = "24")    Integer size,
             @RequestParam(name = "direction",   defaultValue = "ASC")   String direction,
-            @RequestParam(name = "orderBy",     defaultValue = "NOME")  String orderBy){
+            @RequestParam(name = "orderBy",     defaultValue = "nome")  String orderBy){
         return ResponseEntity.ok(service.pageCliente(page, size, direction, orderBy));
     }
 
