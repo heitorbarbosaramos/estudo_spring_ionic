@@ -10,6 +10,13 @@ import java.util.stream.Collectors;
 public class URL {
 
     public static List<Integer> decodeIntList(String s){
+        if(s.isEmpty() || s.isBlank()){
+            try {
+                throw new Exception("Informe uma categoria");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return Arrays.stream(s.split(",")).map(x-> Integer.parseInt(x)).collect(Collectors.toList());
     }
 

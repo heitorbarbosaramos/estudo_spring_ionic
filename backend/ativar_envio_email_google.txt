@@ -1,0 +1,7 @@
+1-) navegue até https://www.google.com.br/
+2-) Clique em cima da foto de perfil no canto superior direito e escolha Gerencia sua conta google
+3-) Vá em segurança
+4-) Vá em Como fazer login no Google e escolha senha do app
+5-) Digite a senha
+6-) Selecione o app e o dispositivo para o qual você quer gerar a senha de app.
+7-) Continue com as instruções de tela
