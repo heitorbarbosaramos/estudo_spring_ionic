@@ -18,9 +18,9 @@ public class EmailSenderService {
     private final TemplateEngine templateEngine;
     private final JavaMailSenderImpl javaMailSender;
 
-    @Value("${email.origem}")
+    @Value("${spring.mail.username}")
     private String email;
-    @Value("${email.senha}")
+    @Value("${spring.mail.password}")
     private String senha;
 
     public EmailSenderService(TemplateEngine templateEngine, JavaMailSenderImpl javaMailSender) {
