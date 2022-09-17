@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -50,5 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues()); //PERMITINDO ACESSO DE MULTIPLAS FONTES COM CONFIGURACOES BASICAS
         return source;
+    }
+
+    //COMPONENTE NA FORMA DE BEAN PARA ENCODAR SENHA EM QUALQUER CLASSE DO SISTEMA
+    @Bean
+    public BCryptPasswordEncoder byBCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }
