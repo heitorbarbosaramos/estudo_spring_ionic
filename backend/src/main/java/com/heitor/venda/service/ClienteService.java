@@ -2,6 +2,7 @@ package com.heitor.venda.service;
 
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.dto.ClienteDTO;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.exceptions.ObjectNotFoundExceptions;
 import com.heitor.venda.repository.ClienteRepository;
 import com.heitor.venda.service.mapper.ClienteMapper;
@@ -34,6 +35,7 @@ public class ClienteService {
     }
 
     public ClienteDTO novo(ClienteDTO clienteDTO){
+        clienteDTO.getPerfis().add(PerfilCliente.CLIENTE);
         clienteDTO.setSenha(clienteDTO.getSenha());
         Cliente cliente = mapper.toEntity(clienteDTO);
         return mapper.toDto(save(cliente));

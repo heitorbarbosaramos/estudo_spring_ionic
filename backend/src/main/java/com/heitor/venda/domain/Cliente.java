@@ -1,6 +1,7 @@
 package com.heitor.venda.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.enums.TipoCliente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,10 @@ public class Cliente {
     @Column(unique = true)
     private String cpfOuCnpj;
     private TipoCliente tipo;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "CLIENTE_PERFIS")
+    private Set<PerfilCliente> perfis = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "CLIENTE_ENDERCO", joinColumns = @JoinColumn(name = "CLIENTE_ID", referencedColumnName = "id"),

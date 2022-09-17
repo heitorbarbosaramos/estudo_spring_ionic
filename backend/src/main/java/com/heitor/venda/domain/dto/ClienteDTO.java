@@ -1,6 +1,7 @@
 package com.heitor.venda.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.enums.TipoCliente;
 import com.heitor.venda.service.validacoes.ClienteInsert;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class ClienteDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String cpfOuCnpj;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<PerfilCliente> perfis = new HashSet<>();
     private TipoCliente tipo;
     private Set<String> telefones = new HashSet<>();
     private List<EnderecoDTO> enderecoList = new ArrayList<>();

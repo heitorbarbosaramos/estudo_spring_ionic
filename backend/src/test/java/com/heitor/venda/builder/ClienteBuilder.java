@@ -2,6 +2,7 @@ package com.heitor.venda.builder;
 
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.dto.ClienteDTO;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.enums.TipoCliente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +20,7 @@ public class ClienteBuilder {
         cliente.setTipo(TipoCliente.PESSOAFISICA);
         cliente.setEnderecoList(EnderecoBuilder.lista());
         cliente.setTelefones(telefones());
+        cliente.setPerfis(criarListPerfil());
         return cliente;
     }
 
@@ -29,6 +31,7 @@ public class ClienteBuilder {
         dto.setEmail(criarObjeto().getEmail());
         dto.setTipo(criarObjeto().getTipo());
         dto.setCpfOuCnpj(criarObjeto().getCpfOuCnpj());
+        dto.setPerfis(criarObjeto().getPerfis());
 
         return dto;
     }
@@ -47,6 +50,12 @@ public class ClienteBuilder {
     public static List<Cliente> criarLista(){
         List<Cliente> list = new ArrayList<>();
         list.add(criarObjeto());
+        return list;
+    }
+
+    public static Set<PerfilCliente> criarListPerfil(){
+        Set<PerfilCliente> list = new HashSet<>();
+        list.add(PerfilCliente.CLIENTE);
         return list;
     }
 
