@@ -1,6 +1,5 @@
 package com.heitor.venda.service;
 
-import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.dto.ClienteDTO;
 import com.heitor.venda.exceptions.ObjectNotFoundExceptions;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +20,13 @@ public class ClienteService {
     private final ClienteRepository repo;
     private final ClienteMapper mapper;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    public ClienteService(ClienteRepository repo, ClienteMapper mapper) {
+    public ClienteService(ClienteRepository repo, ClienteMapper mapper, BCryptPasswordEncoder passwordEncoder) {
         this.repo = repo;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Cliente save(Cliente cliente){
@@ -31,6 +34,7 @@ public class ClienteService {
     }
 
     public ClienteDTO novo(ClienteDTO clienteDTO){
+        clienteDTO.setSenha(clienteDTO.getSenha());
         Cliente cliente = mapper.toEntity(clienteDTO);
         return mapper.toDto(save(cliente));
     }
@@ -62,5 +66,9 @@ public class ClienteService {
         Page<Cliente> pageCliente = pageCliente(page, size, direction, orderBy);
         Page<ClienteDTO> pageClienteDto = pageCliente.map(mapper::toDto);
         return pageClienteDto;
+    }
+
+    private String encodarSenha(String senha){
+        return passwordEncoder.encode(senha);
     }
 }

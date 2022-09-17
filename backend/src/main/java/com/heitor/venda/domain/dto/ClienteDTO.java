@@ -23,6 +23,8 @@ public class ClienteDTO {
     @NotEmpty(message = "Campo obrigatorio")
     @Length(min = 5, max = 80, message = "Campo deve conter de 5 a 80 caracteres")
     private String nome;
+    @NotEmpty(message = "Campo requerido")
+    private String senha;
     @NotEmpty(message = "Campo obrigatorio")
     @Email(message = "Email invalido")
     private String email;
