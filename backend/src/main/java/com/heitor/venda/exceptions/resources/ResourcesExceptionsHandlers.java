@@ -1,5 +1,6 @@
 package com.heitor.venda.exceptions.resources;
 
+import com.heitor.venda.exceptions.AuthorizationExceptions;
 import com.heitor.venda.exceptions.ObjectNotFoundExceptions;
 import com.heitor.venda.exceptions.validation.FieldMessage;
 import com.heitor.venda.exceptions.validation.FieldsMessage;
@@ -25,6 +26,23 @@ public class ResourcesExceptionsHandlers {
     public ResponseEntity<MensagemErrorPadrao> objectNotFoundExceptions(ObjectNotFoundExceptions e, HttpServletRequest request){
 
         HttpStatus status = HttpStatus.NOT_FOUND;
+
+        MensagemErrorPadrao padrao = new MensagemErrorPadrao();
+        padrao.setStatusHttp(status.toString());
+        padrao.setMensagem(e.getMessage());
+        padrao.setPath(request.getRequestURI());
+        padrao.setData(LocalDateTime.now());
+
+        LOG.error(e.getMessage());
+        e.getStackTrace();
+
+        return ResponseEntity.status(status).body(padrao);
+    }
+
+    @ExceptionHandler(AuthorizationExceptions.class)
+    public ResponseEntity<MensagemErrorPadrao> authorizationExceptions(AuthorizationExceptions e, HttpServletRequest request){
+
+        HttpStatus status = HttpStatus.FORBIDDEN;
 
         MensagemErrorPadrao padrao = new MensagemErrorPadrao();
         padrao.setStatusHttp(status.toString());

@@ -3,8 +3,11 @@ package com.heitor.venda.service;
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.dto.ClienteDTO;
 import com.heitor.venda.enums.PerfilCliente;
+import com.heitor.venda.exceptions.AuthorizationExceptions;
 import com.heitor.venda.exceptions.ObjectNotFoundExceptions;
 import com.heitor.venda.repository.ClienteRepository;
+import com.heitor.venda.seguranca.SpringUserSecurity;
+import com.heitor.venda.seguranca.UserService;
 import com.heitor.venda.service.mapper.ClienteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,6 +55,13 @@ public class ClienteService {
     }
 
     public Cliente findById(Integer clienteId){
+
+        SpringUserSecurity userss = UserService.authentication();
+
+        if(userss == null || !userss.hasRole(PerfilCliente.ADMIN) && !clienteId.equals(userss.getId())){
+            throw new AuthorizationExceptions("ACESSO NEGADO");
+        }
+
         return repo.findById(clienteId).orElseThrow(()-> new ObjectNotFoundExceptions("Cliente não encontrado, id: " + clienteId));
     }
 
