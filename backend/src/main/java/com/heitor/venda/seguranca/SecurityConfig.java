@@ -43,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//PARA ASSEGURAR QUE O BACK NÃO ARMAZENE SESSAO
 
-        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));//AUTENTICACAO DE USUARIO
+
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));//AUTORIZACAO DE USUARIO
 
         http.authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
