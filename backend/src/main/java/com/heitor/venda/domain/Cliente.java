@@ -1,5 +1,7 @@
 package com.heitor.venda.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.enums.TipoCliente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,9 +28,16 @@ public class Cliente {
     private String nome;
     @Column(unique = true)
     private String email;
+    @JsonIgnore
+    @NotEmpty(message = "Campo requerido")
+    private String senha;
     @Column(unique = true)
     private String cpfOuCnpj;
     private TipoCliente tipo;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "CLIENTE_PERFIS")
+    private Set<PerfilCliente> perfis = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "CLIENTE_ENDERCO", joinColumns = @JoinColumn(name = "CLIENTE_ID", referencedColumnName = "id"),

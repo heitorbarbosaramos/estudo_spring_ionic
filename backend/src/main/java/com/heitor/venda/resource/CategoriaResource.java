@@ -6,6 +6,7 @@ import com.heitor.venda.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +25,7 @@ public class CategoriaResource {
         this.service = service;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody @Valid CategoriaDTO categoria){
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(service.save(categoria).getId()).toUri();
@@ -49,6 +51,7 @@ public class CategoriaResource {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable(name = "id") Integer id, @RequestBody @Valid CategoriaDTO categoria){
         categoria.setId(id);
@@ -56,6 +59,7 @@ public class CategoriaResource {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Integer id){
         service.delete(id);

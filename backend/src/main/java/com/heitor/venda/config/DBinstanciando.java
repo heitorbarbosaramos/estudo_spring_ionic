@@ -4,6 +4,7 @@ import com.heitor.venda.domain.Categoria;
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.Endereco;
 import com.heitor.venda.domain.Produto;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.enums.TipoCliente;
 import com.heitor.venda.repository.CategoriaRepository;
 import com.heitor.venda.repository.ClienteRepository;
@@ -12,11 +13,13 @@ import com.heitor.venda.repository.ProdutoRepository;
 import com.heitor.venda.service.util.BuscaEnderecoPorCep;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -26,13 +29,15 @@ public class DBinstanciando {
     private final ProdutoRepository prodRepo;
     private final ClienteRepository cliRepo;
     private final EnderecoRepository endRepo;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public DBinstanciando(CategoriaRepository catRepo, ProdutoRepository prodRepo, ClienteRepository cliRepo, EnderecoRepository endRepo) {
+    public DBinstanciando(CategoriaRepository catRepo, ProdutoRepository prodRepo, ClienteRepository cliRepo, EnderecoRepository endRepo, BCryptPasswordEncoder passwordEncoder) {
         this.catRepo = catRepo;
         this.prodRepo = prodRepo;
         this.cliRepo = cliRepo;
         this.endRepo = endRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void criarCategorias(){
@@ -93,9 +98,18 @@ public class DBinstanciando {
 
         log.info("CRIANDO CLIENTE");
 
-        Cliente cli1 = new Cliente(null, "Americo", "americo@email.com", "698.135.831-00", TipoCliente.PESSOAFISICA, new ArrayList<>(), new HashSet<>(), null);
-        Cliente cli2 = new Cliente(null, "Heitor", "heitorhfbr@gmail.com", "964.298.249-85", TipoCliente.PESSOAFISICA, new ArrayList<>(), new HashSet<>(), null);
-        Cliente cli3 = new Cliente(null, "Amelia", "amelia@email.com", "928.224.074-60", TipoCliente.PESSOAFISICA, new ArrayList<>(), new HashSet<>(), null);
+        String senha =  passwordEncoder.encode("123");
+
+        Set<PerfilCliente> perfisBasico = new HashSet<>();
+        perfisBasico.add(PerfilCliente.CLIENTE);
+
+        Set<PerfilCliente> perfisAvancado = new HashSet<>();
+        perfisAvancado.add(PerfilCliente.CLIENTE);
+        perfisAvancado.add(PerfilCliente.ADMIN);
+
+        Cliente cli1 = new Cliente(null, "Americo", "americo@email.com", senha, "698.135.831-00",TipoCliente.PESSOAFISICA, perfisBasico, new ArrayList<>(), new HashSet<>(), null);
+        Cliente cli2 = new Cliente(null, "Amelia", "amelia@email.com", senha, "928.224.074-60", TipoCliente.PESSOAFISICA, perfisBasico, new ArrayList<>(), new HashSet<>(), null);
+        Cliente cli3 = new Cliente(null, "Heitor", "heitorhfbr@gmail.com", senha, "964.298.249-85", TipoCliente.PESSOAFISICA, perfisAvancado, new ArrayList<>(), new HashSet<>(), null);
 
         cliRepo.saveAll(Arrays.asList(cli1, cli2, cli3));
 

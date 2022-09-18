@@ -3,6 +3,7 @@ package com.heitor.venda.service;
 import com.heitor.venda.builder.ClienteBuilder;
 import com.heitor.venda.domain.Cliente;
 import com.heitor.venda.domain.dto.ClienteDTO;
+import com.heitor.venda.enums.PerfilCliente;
 import com.heitor.venda.repository.ClienteRepository;
 import com.heitor.venda.service.mapper.ClienteMapper;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,11 +36,25 @@ class ClienteServiceTest {
     void save(){
         Mockito.when(repo.save(Mockito.any())).thenReturn(ClienteBuilder.criarObjeto());
 
+
         Cliente cliente = service.save(ClienteBuilder.criarObjeto());
 
         Assertions.assertEquals(Cliente.class, cliente.getClass());
     }
 
+    @Test
+    void novo(){
+        Mockito.when(repo.save(Mockito.any())).thenReturn(ClienteBuilder.criarObjeto());
+        Mockito.when(mapper.toDto(Mockito.any())).thenReturn(ClienteBuilder.criarDto());
+
+        ClienteDTO dto = ClienteBuilder.criarDto();
+        dto.setId(null);
+
+        dto = service.novo(dto);
+
+        Assertions.assertEquals(ClienteDTO.class, dto.getClass());
+        Assertions.assertEquals(true, dto.getPerfis().contains(PerfilCliente.CLIENTE));
+    }
     @Test
     void update(){
         Mockito.when(mapper.toEntity(Mockito.any())).thenReturn(ClienteBuilder.criarObjeto());
