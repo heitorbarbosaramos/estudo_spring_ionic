@@ -65,6 +65,10 @@ public class ClienteService {
         return repo.findById(clienteId).orElseThrow(()-> new ObjectNotFoundExceptions("Cliente não encontrado, id: " + clienteId));
     }
 
+    public Cliente findByEmail(String email){
+        return repo.findByEmail(email);
+    }
+
     public List<ClienteDTO> findAll(){
         return repo.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
