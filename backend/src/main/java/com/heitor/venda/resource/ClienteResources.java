@@ -6,6 +6,7 @@ import com.heitor.venda.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -46,6 +47,7 @@ public class ClienteResources {
         return ResponseEntity.ok(service.findById(idCliente));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<Page<Cliente>> pageCliente(
             @RequestParam(name = "page",        defaultValue = "0")     Integer page,
@@ -55,6 +57,7 @@ public class ClienteResources {
         return ResponseEntity.ok(service.pageCliente(page, size, direction, orderBy));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/pageDto")
     public ResponseEntity<Page<ClienteDTO>> pageClienteDto(
             @RequestParam(name = "page",        defaultValue = "0")     Integer page,
