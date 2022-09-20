@@ -61,8 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //CONFIGURACAO DE CORS PARA ACESSO DE MULTPLAS FONTES
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+        configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "DELETE", "GET", "OPTIONS"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues()); //PERMITINDO ACESSO DE MULTIPLAS FONTES COM CONFIGURACOES BASICAS
+        source.registerCorsConfiguration("/**", configuration); //PERMITINDO ACESSO DE MULTIPLAS FONTES COM CONFIGURACOES BASICAS
         return source;
     }
 
