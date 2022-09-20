@@ -47,6 +47,11 @@ public class ClienteResources {
         return ResponseEntity.ok(service.findById(idCliente));
     }
 
+    @GetMapping("/email")
+    public ResponseEntity<Cliente> findByEmail(@RequestParam(name = "email")String email){
+        return ResponseEntity.ok(service.findByEmail(email));
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<Page<Cliente>> pageCliente(

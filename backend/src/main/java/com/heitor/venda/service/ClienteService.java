@@ -66,7 +66,15 @@ public class ClienteService {
     }
 
     public Cliente findByEmail(String email){
-        return repo.findByEmail(email);
+
+        SpringUserSecurity userss = UserService.authentication();
+
+        Cliente cliente = repo.findByEmail(email);
+
+        if(userss != null && !userss.hasRole(PerfilCliente.ADMIN) && !cliente.getId().equals(userss.getId())){
+            throw new AuthorizationExceptions("ACESSO NEGADO");
+        }
+        return cliente;
     }
 
     public List<ClienteDTO> findAll(){
