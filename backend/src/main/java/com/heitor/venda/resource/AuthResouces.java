@@ -30,6 +30,7 @@ public class AuthResouces {
         SpringUserSecurity userSecurity = UserService.authentication();
         String token = jwtUtil.gerandoToken(userSecurity.getUsername());
         response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("access-control-expose-headers", "Authorization");
         return ResponseEntity.noContent().build();
     }
 
