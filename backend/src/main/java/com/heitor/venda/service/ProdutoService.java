@@ -8,9 +8,7 @@ import com.heitor.venda.repository.ProdutoRepository;
 import com.heitor.venda.service.mapper.ProdutoMapper;
 import com.heitor.venda.util.URL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +40,25 @@ public class ProdutoService {
         List<Categoria> categorias = catServ.findAllById(catIds);
 
         Page<Produto> produtos = repo.search(nome, categorias, pageRequest);
+        Page<ProdutoDTO> dtos = produtos.map(mapper::toDTO);
+
+        return dtos;
+    }
+
+    public Page<ProdutoDTO> searchFilter(ProdutoDTO dto, Integer page, Integer size, String direction, String orderBy){
+
+        Produto produto = mapper.toEntity(dto);
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("nome", mat -> mat.ignoreCase().startsWith())
+                .withMatcher("preco", mat-> mat.exact());
+
+        Example<Produto> example = Example.of(produto, matcher);
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.valueOf(direction), orderBy);
+        Pageable pageable = pageRequest;
+
+        Page<Produto> produtos = repo.findAll(example, pageable);
         Page<ProdutoDTO> dtos = produtos.map(mapper::toDTO);
 
         return dtos;
