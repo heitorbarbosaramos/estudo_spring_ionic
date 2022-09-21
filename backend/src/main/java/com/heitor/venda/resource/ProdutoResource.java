@@ -36,4 +36,16 @@ public class ProdutoResource {
         return ResponseEntity.ok(service.search(nome, idsCategorias, page, size, direction, orderBy));
 
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<ProdutoDTO>> searcFilter(
+            @RequestParam(name = "nome"         , defaultValue = "") String nome,
+            @RequestParam(name = "idsCategorias", defaultValue = "")String idsCategorias,
+            @RequestParam(name = "page"         , defaultValue = "0")Integer page,
+            @RequestParam(name = "size"         , defaultValue = "24")Integer size,
+            @RequestParam(name = "direction"    , defaultValue = "ASC")String direction,
+            @RequestParam(name = "orderBy"      , defaultValue = "nome")String orderBy,
+            @RequestBody ProdutoDTO dto ){
+        return ResponseEntity.ok(service.searchFilter(dto, page, size, direction, orderBy));
+    }
 }
